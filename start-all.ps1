@@ -6,15 +6,17 @@ Write-Host "  Starting DIAS Stack - Local Dev" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Prerequisites:" -ForegroundColor Yellow
-Write-Host "  - VPN connected to access MSSQL (10.200.241.41)" -ForegroundColor Yellow
+Write-Host "  - VPN connected to access MSSQL (10.200.250.41)" -ForegroundColor Yellow
 Write-Host "  - .NET 9 SDK installed" -ForegroundColor Yellow
 Write-Host "  - Node.js 20+ installed" -ForegroundColor Yellow
 Write-Host ""
 Write-Host "Services will start in this order:" -ForegroundColor Green
-Write-Host "  1. DalApi      -> http://localhost:8082" -ForegroundColor White
-Write-Host "  2. RestApi     -> http://localhost:8081" -ForegroundColor White
+Write-Host "  1. DalApi      -> http://localhost:8082 (overrides default 5146)" -ForegroundColor White
+Write-Host "  2. RestApi     -> http://localhost:8081 (overrides default 5085)" -ForegroundColor White
 Write-Host "  3. AdminUI     -> http://localhost:3001" -ForegroundColor White
 Write-Host "  4. EduHub      -> http://localhost:5174" -ForegroundColor White
+Write-Host ""
+Write-Host "Note: Ports are set via ASPNETCORE_URLS environment variable" -ForegroundColor Gray
 Write-Host ""
 
 # Start DalApi first (database layer)

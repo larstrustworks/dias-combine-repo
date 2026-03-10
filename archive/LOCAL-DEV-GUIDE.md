@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- **VPN Connection**: Required to access MSSQL Server at `10.200.241.41`
+- **VPN Connection**: Required to access MSSQL Server at `10.200.250.41`
 - **.NET 9 SDK**: For DalApi and RestApi
 - **Node.js 20+**: For AdminUI and EduHub
 - **Git**: Already configured
@@ -10,7 +10,7 @@
 ## Database Configuration
 
 All services connect to the shared MSSQL server via VPN:
-- **Server**: `10.200.241.41`
+- **Server**: `10.200.250.41`
 - **User**: `dias4`
 - **Password**: `Sommer2025!`
 - **Databases**: `Dias`, `Users`, `Certificates`, `Documents`
@@ -77,7 +77,7 @@ cd c:\Users\A246428\dias
 
 ### .NET Services (DalApi, RestApi)
 - `appsettings.Development.json` - Development configuration (already configured for VPN MSSQL)
-- Connection strings point to `10.200.241.41` with SQL authentication
+- Connection strings point to `10.200.250.41` with SQL authentication
 
 ### Node Services (AdminUI, EduHub)
 - `.env.local` - Local environment variables (created, not in Git)
@@ -87,7 +87,7 @@ cd c:\Users\A246428\dias
 
 ### DalApi fails to connect to database
 - ✅ Verify VPN is connected
-- ✅ Test connection: `Test-NetConnection -ComputerName 10.200.241.41 -Port 1433`
+- ✅ Test connection: `Test-NetConnection -ComputerName 10.200.250.41 -Port 1433`
 - ✅ Check credentials: `dias4` / `Sommer2025!`
 
 ### RestApi can't reach DalApi

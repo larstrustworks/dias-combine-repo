@@ -10,4 +10,9 @@ $env:ASPNETCORE_ENVIRONMENT = "Development"
 $env:ASPNETCORE_URLS = "http://localhost:8081"
 $env:DalApiUrl = "http://localhost:8082"
 
-dotnet run --project src/DiasRestApi/DiasRestApi.csproj
+Write-Host "Environment: $env:ASPNETCORE_ENVIRONMENT" -ForegroundColor Gray
+Write-Host "URL Override: $env:ASPNETCORE_URLS" -ForegroundColor Gray
+Write-Host "DalApi URL: $env:DalApiUrl" -ForegroundColor Gray
+Write-Host ""
+
+dotnet run --no-launch-profile --project src/DiasRestApi/DiasRestApi.csproj
