@@ -15,10 +15,33 @@
 
 ## Documentation
 
+### New DiasUI
+
 | Document | Location | Content |
 |----------|----------|---------|
 | **DiasUI Architecture** | [`docs/DIASUI-ARCHITECTURE.md`](docs/DIASUI-ARCHITECTURE.md) | BFF server, auth flow, shared components, theme, routing, deployment |
+| **Shared Components** | [`docs/shared-components.md`](docs/shared-components.md) | DataTable, FormModal, ConfirmDialog, SearchInput usage guide |
+| **Roles & Permissions** | [`docs/roles-and-permissions.md`](docs/roles-and-permissions.md) | Auth store, hasRole(), route guards, role reference |
+| **Page Conversion Prompt** | [`docs/DIASUI-PAGE-CONVERSION-PROMPT.md`](docs/DIASUI-PAGE-CONVERSION-PROMPT.md) | Prompt template for converting legacy pages |
 | **Test Users & Roles** | [`docs/DIASUI-TEST-USERS.md`](docs/DIASUI-TEST-USERS.md) | Database roles, groups, test user list by role profile |
+
+### Legacy System
+
+| Document | Location | Content |
+|----------|----------|---------|
+| **Legacy Overview** | [`docs/legacy/README.md`](docs/legacy/README.md) | Legacy architecture, tech stack, key directories |
+| **Roles** | [`docs/legacy/roles.md`](docs/legacy/roles.md) | All 50+ legacy roles with descriptions |
+| **Menu Items** | [`docs/legacy/menu-items.md`](docs/legacy/menu-items.md) | Full menu tree, role→route mapping, legacy→new route mapping |
+| **API Endpoints** | [`docs/legacy/api-endpoints.md`](docs/legacy/api-endpoints.md) | All legacy API endpoints grouped by service |
+| **External Services** | [`docs/legacy/external-services.md`](docs/legacy/external-services.md) | External service URLs and request flow |
+| **DTOs** | [`docs/legacy/dtos.md`](docs/legacy/dtos.md) | Key DTO interfaces (FilterDTO, Student, School, etc.) |
+| **Page Inventory** | [`docs/legacy/page-inventory.md`](docs/legacy/page-inventory.md) | Complete list of 65 pages with conversion status |
+| **Port Verification** | [`docs/LEGACY-PORT-VERIFICATION.md`](docs/LEGACY-PORT-VERIFICATION.md) | IIS port verification instructions |
+
+### Dev Setup
+
+| Document | Location | Content |
+|----------|----------|---------|
 | **Local Database Setup** | [`LOCAL-DATABASE-SETUP.md`](LOCAL-DATABASE-SETUP.md) | SQL Server connection, schema setup |
 | **Quick Start** | [`QUICK-START.md`](QUICK-START.md) | Getting the stack running locally |
 | **Port Reference** | [`PORTS.md`](PORTS.md) | All service ports |

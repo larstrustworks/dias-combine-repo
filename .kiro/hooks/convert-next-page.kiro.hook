@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Convert Next Legacy Page",
+  "description": "Reads docs/legacy/page-inventory.md to find the next page with ⬜ (Not Started) status, then converts it using the DIASUI-PAGE-CONVERSION-PROMPT.md template, and updates the inventory status to ✅ when done.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are converting legacy Angular pages to the new React DiasUI. Follow these steps:\n\n1. READ `docs/legacy/page-inventory.md` completely.\n\n2. FIND the FIRST page with status ⬜ (Not Started) in the tables. Check all sections: \"Pages To Convert\", \"Reports\", \"User Management\", \"Developer Tools\", and \"Other Pages\". Pick the first ⬜ you find scanning top to bottom.\n\n3. READ the conversion template at `docs/DIASUI-PAGE-CONVERSION-PROMPT.md` completely.\n\n4. For the page you found, fill in all the [PLACEHOLDERS] from the template using the information in the inventory row (Page name, Legacy Folder, Legacy Route, New Route, View Role, Create/Edit Role, Services).\n\n5. EXECUTE the full conversion following every instruction in the template:\n   - Read all legacy source files for that page\n   - Read the architecture docs and existing patterns\n   - Create types, hooks, pages, and update router/i18n/navigation as specified\n   - Follow ALL mandatory requirements (roles, i18n, shared components, FilterDTO pattern, etc.)\n   - Run through the completeness checklist\n\n6. AFTER the conversion is complete, UPDATE `docs/legacy/page-inventory.md`:\n   - Change the status of the converted page from ⬜ to ✅\n   - Only mark it ✅ if you actually created all the required files\n\n7. STOP after converting ONE page. The user will trigger this hook again for the next page."
+  }
+}
