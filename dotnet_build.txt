@@ -1,0 +1,14 @@
+  Determining projects to restore...
+C:\Users\A246428\dias\DiasRestApi\dotnet_version\src\DiasRestApi.csproj : warning NU1900: Error occurred while getting package vulnerability data: Unable to load the service index for source https://pkgs.dev.azure.com/DekraDenmark/_packaging/DekraDenmark/nuget/v3/index.json.
+  All projects are up-to-date for restore.
+C:\Users\A246428\dias\DiasRestApi\dotnet_version\src\DiasRestApi.csproj : warning NU1900: Error occurred while getting package vulnerability data: Unable to load the service index for source https://pkgs.dev.azure.com/DekraDenmark/_packaging/DekraDenmark/nuget/v3/index.json.
+  DiasRestApi -> C:\Users\A246428\dias\DiasRestApi\dotnet_version\src\bin\Debug\net9.0\DiasRestApi.dll
+
+Build succeeded.
+
+C:\Users\A246428\dias\DiasRestApi\dotnet_version\src\DiasRestApi.csproj : warning NU1900: Error occurred while getting package vulnerability data: Unable to load the service index for source https://pkgs.dev.azure.com/DekraDenmark/_packaging/DekraDenmark/nuget/v3/index.json.
+C:\Users\A246428\dias\DiasRestApi\dotnet_version\src\DiasRestApi.csproj : warning NU1900: Error occurred while getting package vulnerability data: Unable to load the service index for source https://pkgs.dev.azure.com/DekraDenmark/_packaging/DekraDenmark/nuget/v3/index.json.
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:48.68
