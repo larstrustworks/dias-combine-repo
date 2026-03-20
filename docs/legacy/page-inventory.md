@@ -19,15 +19,15 @@ Use `docs/DIASUI-PAGE-CONVERSION-PROMPT.md` for each conversion.
 | 2 | **Student Create/Edit** | `student/` | `students/studentCreate` | `/students/create`, `/students/:id` | `MenuStudent` | `CreateStudent` | StudentService, CprService | ✅ |
 | 3 | **Student Assigned** | `student/StudentAssigned/` | `studentassigned` | `/student-assigned` | `AssignStudent` | `AssignStudent` | StudentAssignedService | ✅ |
 | 4 | **Student Types** | `student/StudentType/` | `studenttypes` | `/student-types` | `menuStudentType` | `EditStudentType` | StudentService | ✅ |
-| 5 | **Requisition Types** | `student/RequisitionTypes/` | `requisitiontypes` | `/requisition-types` | `menuStudentType` | `EditStudentType` | StudentService | ⬜ |
-| 6 | **Schools** | `Schools/` | `school` | `/schools` | `MenuSchool` | `CreateSchool` | SchoolService | ⬜ |
-| 7 | **School Edit** | `Schools/Edit/` | `school/schooledit/:id` | `/schools/:id` | `MenuSchool` | `CreateSchool` | SchoolService, OmraadeService | ⬜ |
-| 8 | **School Efteruddannelse** | `Schools/EfterUddannelse/` | _(sub-page)_ | `/schools/:id/efteruddannelse` | `MenuSchool` | — | SchoolService | ⬜ |
-| 9 | **School Settings** | `Schools/SchoolSettings/` | _(sub-page)_ | `/schools/:id/settings` | `MenuSchool` | — | SchoolService | ⬜ |
-| 10 | **School Calendar** | `SchoolCalendar/` | `schoolcalendar` | `/school-calendar` | `MenuSchoolCalendar` | `SaveSchoolCalendar` | SchoolService | ⬜ |
-| 11 | **Customers** | `Customers/` | `customers` | `/customers` | `MenuCustomer` | `CreateCustomer` | CustomerService | ⬜ |
-| 12 | **Customer Contact Persons** | `Customers/CustomerContactPersons/` | `customers` | `/customers/:id/contacts` | `MenuCustomer` | — | ContactPersonService | ⬜ |
-| 13 | **Sessions** | `session/` | `sessions` | `/sessions` | `MenuSession` | `CreateSession` | SessionService | ⬜ |
+| 5 | **Requisition Types** | `student/RequisitionTypes/` | `requisitiontypes` | `/requisition-types` | `menuStudentType` | `EditStudentType` | StudentService | ✅ |
+| 6 | **Schools** | `Schools/` | `school` | `/schools` | `MenuSchool` | `CreateSchool` | SchoolService | ✅ |
+| 7 | **School Edit** | `Schools/Edit/` | `school/schooledit/:id` | `/schools/:id` | `MenuSchool` | `CreateSchool` | SchoolService, OmraadeService | ✅ |
+| 8 | **School Efteruddannelse** | `Schools/EfterUddannelse/` | _(sub-page)_ | `/schools/:id/efteruddannelse` | `MenuSchool` | — | SchoolService | ✅ |
+| 9 | **School Settings** | `Schools/SchoolSettings/` | _(sub-page)_ | `/schools/:id/settings` | `MenuSchool` | — | SchoolService | ✅ |
+| 10 | **School Calendar** | `SchoolCalendar/` | `schoolcalendar` | `/school-calendar` | `MenuSchoolCalendar` | `SaveSchoolCalendar` | SchoolService | ✅ |
+| 11 | **Customers** | `Customers/` | `customers` | `/customers` | `MenuCustomer` | `CreateCustomer` | CustomerService | ✅ |
+| 12 | **Customer Contact Persons** | `Customers/CustomerContactPersons/` | `customers` | `/customers/:id/contacts` | `MenuCustomer` | — | ContactPersonService | ✅ |
+| 13 | **Sessions** | `session/` | `sessions` | `/sessions` | `MenuSession` | `CreateSession` | SessionService | ✅ |
 | 14 | **Signup** | `signup/` | `signup` | _(part of sessions)_ | `MenuSession` | — | SignupService | ⬜ |
 | 15 | **Protocol** | `Protocol/` | `protocol` | `/protocol` | `MenuProtocolMerge` | `CreateProtocolMerge` | ProtocolService | ⬜ |
 | 16 | **Prices** | `Prices/` | `prices` | `/prices` | `MenuPrice` | `CreatePrice` | PriceService | ⬜ |
