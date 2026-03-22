@@ -1,11 +1,11 @@
-# Start dias-edu-hub locally (React + Express relay)
+# Start DiasUI locally (React + Express proxy)
 # Depends on RestApi running on http://localhost:8081
 
-Write-Host "Starting dias-edu-hub on http://localhost:5174..." -ForegroundColor Green
+Write-Host "Starting DiasUI on http://localhost:5174..." -ForegroundColor Green
 Write-Host "Make sure RestApi is running on http://localhost:8081" -ForegroundColor Yellow
 Write-Host ""
 
-Set-Location "$PSScriptRoot\dias-edu-hub"
+Set-Location "$PSScriptRoot\DiasUI"
 
 # Check if node_modules exists
 if (-not (Test-Path "node_modules")) {

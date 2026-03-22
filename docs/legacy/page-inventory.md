@@ -28,39 +28,39 @@ Use `docs/DIASUI-PAGE-CONVERSION-PROMPT.md` for each conversion.
 | 11 | **Customers** | `Customers/` | `customers` | `/customers` | `MenuCustomer` | `CreateCustomer` | CustomerService | ✅ |
 | 12 | **Customer Contact Persons** | `Customers/CustomerContactPersons/` | `customers` | `/customers/:id/contacts` | `MenuCustomer` | — | ContactPersonService | ✅ |
 | 13 | **Sessions** | `session/` | `sessions` | `/sessions` | `MenuSession` | `CreateSession` | SessionService | ✅ |
-| 14 | **Signup** | `signup/` | `signup` | _(part of sessions)_ | `MenuSession` | — | SignupService | ⬜ |
-| 15 | **Protocol** | `Protocol/` | `protocol` | `/protocol` | `MenuProtocolMerge` | `CreateProtocolMerge` | ProtocolService | ⬜ |
-| 16 | **Prices** | `Prices/` | `prices` | `/prices` | `MenuPrice` | `CreatePrice` | PriceService | ⬜ |
-| 17 | **Fees** | `Prices/` (fee routes) | `prices/feelist` | `/fees` | `MenuFee` | `CreateFee` | PriceService | ⬜ |
-| 18 | **Courses** | `Course/` | `course` | `/courses` | `MenuCourse` | `CreateCourse` | CourseService | ⬜ |
-| 19 | **Course Info** | `Course/` (courseinfo routes) | `course/courseinfolist` | `/course-info` | `MenuCourseInfo` | `CreateCourseInfo` | CourseCatalogService | ⬜ |
-| 20 | **Locations** | `Locations/` | `location` | `/locations` | `MenuLocation` | `EditLocations` | LocationService, OmraadeService | ⬜ |
-| 21 | **Location Document** | `Locations/Document/` | `location/locationdocument/:id` | `/locations/:id/documents` | `MenuLocation` | — | LocationService | ⬜ |
-| 22 | **Invoice Types** | `Invoice/` | `invoice` | `/invoice-types` | `MenuInvoiceType` | `EditInvoiceType` | BillingService | ⬜ |
-| 23 | **Assign Objects** | `AssignObject/` | `assignobject` | `/assign-objects` | `MenuAssignObject` | — | AssignObjectService, SystemAssignObjectService | ⬜ |
-| 24 | **Activities** | `Activity/` | `activity` | `/activities` | `MenuActivity` | `EditActivity` | ActivityService | ⬜ |
-| 25 | **Templates** | `Template/` | `template` | `/templates` | `MenuTemplate` | `MenuTemplate` | TemplateService | ⬜ |
-| 26 | **Key Templates** | `Template/` (key routes) | `template/keylist` | `/key-templates` | `MenuTemplate` | `MenuTemplate` | KeyTemplateService, KeyWordService | ⬜ |
-| 27 | **Admin Text** | `Template/` (admintext routes) | `template/admintextlist` | `/admin-text` | `AdminText` | `AdminText` | AdminTextService | ⬜ |
-| 28 | **Packages** | `Packages/` | `packages` | `/packages` | `Packages` | `Packages` | PackagesService | ⬜ |
-| 29 | **Qualifications** | `Qualifications/` | `qualifications` | `/qualifications` | `Qualifications` | `Qualifications` | — | ⬜ |
-| 30 | **Status Types** | `StatusTypes/` | `statustypes` | `/status-types` | `StatusTypes` | `StatusTypes` | StatusTypeService | ⬜ |
-| 31 | **Resources** | `Resources/` | `resources` | `/resources` | `Resources` | `Resources` | — | ⬜ |
-| 32 | **Delta (UMO)** | `UMO/Delta/` | `delta` | `/delta` | `MenuDelta` | `MenuSettingsDelta` | UMOLogService, DomainVaerdierService | ⬜ |
-| 33 | **Type of Test** | `TypeOfTest/` | `typeoftest` | `/type-of-test` | `MenuTypeOfTest` | `EditTypeOfTest` | TestCourseService | ⬜ |
-| 34 | **Areas** | `area/` | `area` | `/areas` | `ViewArea` | `EditArea` | OmraadeService | ⬜ |
-| 35 | **Website Categories** | `websitecategories/` | `websitecategories` | `/website-categories` | `ViewWebsiteKategorier` | `EditWebsiteKategorier` | WebsiteCategoriesService | ⬜ |
-| 36 | **Document Categories** | `Administration/Document/DocumentCategory/` | `document` | `/document-categories` | `MenuDocumentCategory` | `EditDocumentCategory` | — | ⬜ |
-| 37 | **Document Bindings** | `Administration/Document/DocumentBinding/` | `documentbinding` | `/document-bindings` | `MenuDocumentBinding` | `CreateDocumentBinding` | — | ⬜ |
-| 38 | **Document Keys** | `Administration/Document/DocumentKeys/` | `documentkeys` | `/document-keys` | `MenuDocumentBinding` | `CreateDocumentBinding` | — | ⬜ |
-| 39 | **School AMU** | `SchoolAmu/` | `schoolamu` | `/school-amu` | `ViewSkoleAMUramme` | `EditSkoleAMUramme` | SchoolAmuService | ⬜ |
-| 40 | **Insurance** | `Insurance/` | `insurance` | `/insurance` | `ViewA_kasse` | `EditA_kasse` | InsuranceService | ⬜ |
-| 41 | **Customer Interest** | `customerinterest/` | `customerinterest` | `/customer-interest` | `ViewKundeInteresse` | `EditKundeInteresse` | CustomerInterestService | ⬜ |
-| 42 | **Cancellation Reasons** | `CancellationReason/` | `cancellationreason` | `/cancellation-reasons` | `HoldaflysningsAarsag - Admin` | `HoldaflysningsAarsag - Admin` | HoldAflysningsAarsagService | ⬜ |
-| 43 | **Messages** | `Messages/` | `messages` | `/messages` | `Message` | `Message` | — | ⬜ |
-| 44 | **Customer Agreements** | `CustomerAgreement/` | `customeragreement` | `/customer-agreements` | `MenuCustomerAgreement` | — | — | ⬜ |
-| 45 | **Certificates** | `Certificate/` | `certificate` | `/certificates` | `MenuCertificate` | — | CertificateService | ⬜ |
-| 46 | **Website Signups** | `WebSiteSignups/` | `websitesignups` | `/website-signups` | — | — | WebSiteSignupService | ⬜ |
+| 14 | **Signup** | `signup/` | `signup` | _(part of sessions)_ | `MenuSession` | — | SignupService | ✅ |
+| 15 | **Protocol** | `Protocol/` | `protocol` | `/protocol` | `MenuProtocolMerge` | `CreateProtocolMerge` | ProtocolService | ✅ |
+| 16 | **Prices** | `Prices/` | `prices` | `/prices` | `MenuPrice` | `CreatePrice` | PriceService | ✅ |
+| 17 | **Fees** | `Prices/` (fee routes) | `prices/feelist` | `/fees` | `MenuFee` | `CreateFee` | PriceService | ✅ |
+| 18 | **Courses** | `Course/` | `course` | `/courses` | `MenuCourse` | `CreateCourse` | CourseService | ✅ |
+| 19 | **Course Info** | `Course/` (courseinfo routes) | `course/courseinfolist` | `/course-info` | `MenuCourseInfo` | `CreateCourseInfo` | CourseCatalogService | ✅ |
+| 20 | **Locations** | `Locations/` | `location` | `/locations` | `MenuLocation` | `EditLocations` | LocationService, OmraadeService | ✅ |
+| 21 | **Location Document** | `Locations/Document/` | `location/locationdocument/:id` | `/locations/:id/documents` | `MenuLocation` | — | LocationService | ✅ |
+| 22 | **Invoice Types** | `Invoice/` | `invoice` | `/invoice-types` | `MenuInvoiceType` | `EditInvoiceType` | BillingService | ✅ |
+| 23 | **Assign Objects** | `AssignObject/` | `assignobject` | `/assign-objects` | `MenuAssignObject` | — | AssignObjectService, SystemAssignObjectService | ✅ |
+| 24 | **Activities** | `Activity/` | `activity` | `/activities` | `MenuActivity` | `EditActivity` | ActivityService | ✅ |
+| 25 | **Templates** | `Template/` | `template` | `/templates` | `MenuTemplate` | `MenuTemplate` | TemplateService | ✅ |
+| 26 | **Key Templates** | `Template/` (key routes) | `template/keylist` | `/key-templates` | `MenuTemplate` | `MenuTemplate` | KeyTemplateService, KeyWordService | ✅ |
+| 27 | **Admin Text** | `Template/` (admintext routes) | `template/admintextlist` | `/admin-text` | `AdminText` | `AdminText` | AdminTextService | ✅ |
+| 28 | **Packages** | `Packages/` | `packages` | `/packages` | `Packages` | `Packages` | PackagesService | ✅ |
+| 29 | **Qualifications** | `Qualifications/` | `qualifications` | `/qualifications` | `Qualifications` | `Qualifications` | — | ✅ |
+| 30 | **Status Types** | `StatusTypes/` | `statustypes` | `/status-types` | `StatusTypes` | `StatusTypes` | StatusTypeService | ✅ |
+| 31 | **Resources** | `Resources/` | `resources` | `/resources` | `Resources` | `Resources` | — | ✅ |
+| 32 | **Delta (UMO)** | `UMO/Delta/` | `delta` | `/delta` | `MenuDelta` | `MenuSettingsDelta` | UMOLogService, DomainVaerdierService | ✅ |
+| 33 | **Type of Test** | `TypeOfTest/` | `typeoftest` | `/type-of-test` | `MenuTypeOfTest` | `EditTypeOfTest` | TestCourseService | ✅ |
+| 34 | **Areas** | `area/` | `area` | `/areas` | `ViewArea` | `EditArea` | OmraadeService | ✅ |
+| 35 | **Website Categories** | `websitecategories/` | `websitecategories` | `/website-categories` | `ViewWebsiteKategorier` | `EditWebsiteKategorier` | WebsiteCategoriesService | ✅ |
+| 36 | **Document Categories** | `Administration/Document/DocumentCategory/` | `document` | `/document-categories` | `MenuDocumentCategory` | `EditDocumentCategory` | — | ✅ |
+| 37 | **Document Bindings** | `Administration/Document/DocumentBinding/` | `documentbinding` | `/document-bindings` | `MenuDocumentBinding` | `CreateDocumentBinding` | — | ✅ |
+| 38 | **Document Keys** | `Administration/Document/DocumentKeys/` | `documentkeys` | `/document-keys` | `MenuDocumentBinding` | `CreateDocumentBinding` | — | ✅ |
+| 39 | **School AMU** | `SchoolAmu/` | `schoolamu` | `/school-amu` | `ViewSkoleAMUramme` | `EditSkoleAMUramme` | SchoolAmuService | ✅ |
+| 40 | **Insurance** | `Insurance/` | `insurance` | `/insurance` | `ViewA_kasse` | `EditA_kasse` | InsuranceService | ✅ |
+| 41 | **Customer Interest** | `customerinterest/` | `customerinterest` | `/customer-interest` | `ViewKundeInteresse` | `EditKundeInteresse` | CustomerInterestService | ✅ |
+| 42 | **Cancellation Reasons** | `CancellationReason/` | `cancellationreason` | `/cancellation-reasons` | `HoldaflysningsAarsag - Admin` | `HoldaflysningsAarsag - Admin` | HoldAflysningsAarsagService | ✅ |
+| 43 | **Messages** | `Messages/` | `messages` | `/messages` | `Message` | `Message` | — | ✅ |
+| 44 | **Customer Agreements** | `CustomerAgreement/` | `customeragreement` | `/customer-agreements` | `MenuCustomerAgreement` | — | — | ✅ |
+| 45 | **Certificates** | `Certificate/` | `certificate` | `/certificates` | `MenuCertificate` | — | CertificateService | ✅ |
+| 46 | **Website Signups** | `WebSiteSignups/` | `websitesignups` | `/website-signups` | — | — | WebSiteSignupService | ✅ |
 
 ---
 
@@ -68,16 +68,16 @@ Use `docs/DIASUI-PAGE-CONVERSION-PROMPT.md` for each conversion.
 
 | # | Report | Legacy Route | New Route | Role | Status |
 |---|--------|-------------|-----------|------|--------|
-| R1 | **Search Invoice** | `invoice/searchinvoice` | `/reports/search-invoice` | `ReportInvoice` | ⬜ |
-| R2 | **Missing Hours** | `reports/signupmissinghours` | `/reports/missing-hours` | `ReportMissingHours` | ⬜ |
-| R3 | **Activity Period** | `reports/activityperiod` | `/reports/activity-period` | `ReportActivityPeriod` | ⬜ |
-| R4 | **Offer** | `reports/offer` | `/reports/offer` | `ReportOffer` | ⬜ |
-| R5 | **Missing Documents** | `reports/missingdocuments` | `/reports/missing-documents` | `ReportMissingDocument` | ⬜ |
-| R6 | **Signups** | `reports/signupreport/{type}` | `/reports/signups` | `ReportSignup` | ⬜ |
-| R7 | **Session Out of Sync** | `reports/vu` | `/reports/session-out-of-sync` | `ReportSignup` | ⬜ |
-| R8 | **UVM** (Get/Report/Reported) | `reports/uvm/*` | `/reports/uvm/*` | `ReportToUVM` | ⬜ |
-| R9 | **DWH** (Get/Report/Reported) | `reports/dwh/*` | `/reports/dwh/*` | `MenuReportDWH` | ⬜ |
-| R10 | **Campaign Contact** | `reports/campaigncontact` | `/reports/campaign-contact` | `Campaign` | ⬜ |
+| R1 | **Search Invoice** | `invoice/searchinvoice` | `/reports/search-invoice` | `ReportInvoice` | ✅ |
+| R2 | **Missing Hours** | `reports/signupmissinghours` | `/reports/missing-hours` | `ReportMissingHours` | ✅ |
+| R3 | **Activity Period** | `reports/activityperiod` | `/reports/activity-period` | `ReportActivityPeriod` | ✅ |
+| R4 | **Offer** | `reports/offer` | `/reports/offer` | `ReportOffer` | ✅ |
+| R5 | **Missing Documents** | `reports/missingdocuments` | `/reports/missing-documents` | `ReportMissingDocument` | ✅ |
+| R6 | **Signups** | `reports/signupreport/{type}` | `/reports/signups` | `ReportSignup` | ✅ |
+| R7 | **Session Out of Sync** | `reports/vu` | `/reports/session-out-of-sync` | `ReportSignup` | ✅ |
+| R8 | **UVM** (Get/Report/Reported) | `reports/uvm/*` | `/reports/uvm/*` | `ReportToUVM` | ✅ |
+| R9 | **DWH** (Get/Report/Reported) | `reports/dwh/*` | `/reports/dwh/*` | `MenuReportDWH` | ✅ |
+| R10 | **Campaign Contact** | `reports/campaigncontact` | `/reports/campaign-contact` | `Campaign` | ✅ |
 
 ---
 
@@ -85,9 +85,9 @@ Use `docs/DIASUI-PAGE-CONVERSION-PROMPT.md` for each conversion.
 
 | # | Page | Legacy Route | New Route | Role | Status |
 |---|------|-------------|-----------|------|--------|
-| U1 | **Users** | `users/userslist` | `/users` | `UserAdmin` | ⬜ |
-| U2 | **Roles** | `role/list` | `/roles` | `Developer` | ⬜ |
-| U3 | **Groups** | `groups/groupsList` | `/groups` | `Groups` / `EditGroups` | ⬜ |
+| U1 | **Users** | `users/userslist` | `/users` | `UserAdmin` | ✅ |
+| U2 | **Roles** | `role/list` | `/roles` | `Developer` | ✅ |
+| U3 | **Groups** | `groups/groupsList` | `/groups` | `Groups` / `EditGroups` | ✅ |
 
 ---
 
@@ -95,10 +95,10 @@ Use `docs/DIASUI-PAGE-CONVERSION-PROMPT.md` for each conversion.
 
 | # | Page | Legacy Route | New Route | Role | Status |
 |---|------|-------------|-----------|------|--------|
-| D1 | **Logs** | `developer/logs` | `/developer/logs` | `Administrators` | ⬜ |
-| D2 | **Notes** | `developer/notes` | `/developer/notes` | `Administrators` | ⬜ |
-| D3 | **Config** | `developer/configmanagement` | `/developer/config` | `Administrators` | ⬜ |
-| D4 | **Queue** | `queue/list` | `/queue` | `MenuCertificate` | ⬜ |
+| D1 | **Logs** | `developer/logs` | `/developer/logs` | `Administrators` | ✅ |
+| D2 | **Notes** | `developer/notes` | `/developer/notes` | `Administrators` | ✅ |
+| D3 | **Config** | `developer/configmanagement` | `/developer/config` | `Administrators` | ✅ |
+| D4 | **Queue** | `queue/list` | `/queue` | `MenuCertificate` | ✅ |
 
 ---
 
@@ -106,8 +106,8 @@ Use `docs/DIASUI-PAGE-CONVERSION-PROMPT.md` for each conversion.
 
 | # | Page | Legacy Route | New Route | Status |
 |---|------|-------------|-----------|--------|
-| O1 | **Change Log** | `changelog/list` | `/changelog` | ⬜ |
-| O2 | **Dashboard** | `dashboard` | `/dashboard` | ⬜ (stub exists) |
+| O1 | **Change Log** | `changelog/list` | `/changelog` | ✅ |
+| O2 | **Dashboard** | `dashboard` | `/dashboard` | ✅ |
 
 ---
 
