@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "name": "Convert Next Endpoint",
+  "description": "Reads the currently open endpoints-list.csv (or the most recently referenced one), finds the next endpoint with SPEC_CREATED status, and runs the full conversion process using Templates/convert-single-endpoint.md",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Look at the currently active file in the editor. If it is an endpoints-list.csv file, use that. If not, ask the user which endpoints-list.csv to use.\n\nOnce you have the endpoints-list.csv file:\n\n1. Read the file and find the FIRST endpoint where conversion_status is \"SPEC_CREATED\" (not \"CONVERTED\" or any other status).\n2. If no SPEC_CREATED endpoints remain, tell the user \"All endpoints in this file are already converted or in progress.\"\n3. If found, note the endpoint key and the dias_controller_path.\n\nThen determine the legacy repo:\n- The controller folder name (e.g., \"Cvr\" from DiasRestApi/dotnet_version/src/Controllers/Cvr/) maps to a Legacy repo folder.\n- Search for the matching folder under Legacy/ using EXACT name match only.\n- The legacy repo path is the full path like \"Legacy/Cvr\" or \"Legacy/DocumentApi\".\n\nNow execute the conversion using template Templates/convert-single-endpoint.md with:\n- endpoint file: the endpoints-list.csv file you found\n- endpoint key: the key from step 1\n\nIMPORTANT: DiasRestApi is an ASP.NET Core (.NET 9) project using C#. All code must be C# with proper ASP.NET Core patterns (controller inheritance from BaseController, constructor injection, [ApiController] attribute, [HttpGet]/[HttpPost] route attributes, etc.). Do NOT generate TypeScript or LoopBack code.\n\nConvert the endpoint as specified in the template. Unless it is a very complex endpoint, just convert it without creating a SDD spec plan.\n\nBe sure to keep the concepts of the template very strict and do not make up stuff that does not match.\nEspecially doublecheck that you create all the documentation docs needed in the /docs folder: CONVERSION_SUMMARY.md, MODELS_USED.md, SERVICES_USED.md and TEST_INSTRUCTIONS.md.\nAlso tripplecheck that database communication goes through DalService (IDalService interface, constructor injection) as specified in the template.\nUnit tests use xUnit + Moq and go in DiasRestApi/dotnet_version/tests/DiasRestApi.UnitTests/Controllers/.\n\nNote that the endpoint file, placeholders and specs were created using Templates/legacy_repo_step_a_b_c.md for the Legacy repo identified above."
+  },
+  "workspaceFolderName": "dias",
+  "shortName": "convert-next-endpoint"
+}

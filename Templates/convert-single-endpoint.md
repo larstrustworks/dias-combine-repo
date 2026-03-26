@@ -23,22 +23,24 @@ Now we need to convert one endpoint at a time from the legacy repo, and for this
 
 <endpoint key>
 
-## Framework: LoopBack 4 (REQUIRED)
+## Framework: ASP.NET Core (.NET 9) (REQUIRED)
 
-DiasRestApi uses LoopBack 4 exclusively. All endpoints MUST use:
-- Controller class with `@get()` or `@post()` decorator
-- Dependency injection via `@inject()`
-- Auto-discovery (files must be named `*.controller.ts`)
+DiasRestApi uses ASP.NET Core on .NET 9 exclusively. All endpoints MUST use:
+- Controller class inheriting from `BaseController` (or `ControllerBase` for simple cases)
+- Route attributes: `[HttpGet]`, `[HttpPost]`, `[HttpPut]`, `[HttpDelete]`
+- `[ApiController]` attribute on the controller class
+- Dependency injection via constructor injection
+- Controller auto-discovery (standard ASP.NET Core convention)
 - No manual route registration needed
 
-**Reference:** See existing controllers in `DiasRestApi/nodejs/src/modules/*/controllers/`
+**Reference:** See existing controllers in `DiasRestApi/dotnet_version/src/Controllers/`
 
 ## Endpoint Mapping Convention
 
 When converting legacy endpoints, follow this URL mapping:
 - **Legacy endpoint**: Original path from legacy repo
 - **Converted endpoint**: `/legacy/{legacy-repo-name}/{original-path}`
-- **Example**: `GET /invoice/{id}` → `GET /legacy/invoice_services/invoice/{id}`
+- **Example**: `GET /Cvr/GetCvr/{cvrNumber}` → `GET /legacy/Cvr/Cvr/GetCvr/{cvrNumber}`
 
 ## Code Quality Standards
 
@@ -46,18 +48,18 @@ All converted endpoints MUST meet these standards:
 
 | Standard | Requirement |
 |----------|-------------|
-| ESLint | Zero errors required |
-| Return Types | Explicit return types on all functions |
-| Imports | Use absolute imports (not relative) |
-| Function Length | Follow ESLint function length limits |
-| TypeScript | Strict mode, proper typing |
+| Build | Zero errors on `dotnet build` |
+| Return Types | Explicit return types on all methods (`Task<IActionResult>`, etc.) |
+| Namespaces | Follow project namespace conventions (`DiasRestApi.Controllers.*`) |
+| XML Docs | XML documentation comments on public members |
+| C# | Nullable reference types enabled, proper typing |
 
 **Code Quality Checklist** (verify before marking conversion complete):
-- [ ] Zero ESLint errors
-- [ ] Explicit return types on all functions
-- [ ] Absolute imports (no relative imports)
-- [ ] Function length within limits
-- [ ] TypeScript strict mode compliance
+- [ ] Zero build errors
+- [ ] Explicit return types on all methods
+- [ ] Proper namespace following project conventions
+- [ ] XML documentation on public members
+- [ ] Nullable reference types handled correctly
 - [ ] All tests passing
 - [ ] Documentation complete and accurate
 
@@ -68,8 +70,6 @@ All converted endpoints MUST meet these standards:
 **⛔ DO NOT PROCEED TO STEP 1 UNTIL THIS IS COMPLETE**
 
 ENDPOINT_SPEC.md response format is UNRELIABLE. You MUST verify from authoritative source.
-
-See `.kiro/steering/response-format-validation.md` for complete workflow.
 
 #### Step 0.1: Trace the Route (CRITICAL - V4)
 
@@ -123,7 +123,7 @@ See `.kiro/steering/response-format-validation.md` for complete workflow.
 - Find the Java class to understand structure
 
 **2E: Neither Found?**
-- Check golden response: `DiasRestApi/nodejs/src/controllers/{legacy-repo}/golden-responses/{endpoint-key}.json`
+- Check golden response: `DiasRestApi/dotnet_version/src/Controllers/{legacy-repo}/golden-responses/{endpoint-key}.json`
 - If nothing exists: **STOP AND ASK USER**
   > "I cannot find XSLT, Java Mapper, or outType definition. Please provide a golden master response from the legacy endpoint."
 
@@ -181,35 +181,36 @@ After identifying the authoritative source, create a complete type mapping from 
 ```markdown
 ## Type Mapping: [ClassName]
 
-| Field | Java Type | JSON Type | Nullable | Notes |
-|-------|-----------|-----------|----------|-------|
-| UserId | String | string | no | |
-| PhoneNumber | String | string | yes | |
-| FormType | Integer | number | no | |
-| serialNumber | String | string | yes | Must be explicit null |
+| Field | Java Type | C# Type | JSON Type | Nullable | Notes |
+|-------|-----------|---------|-----------|----------|-------|
+| UserId | String | string | string | no | |
+| PhoneNumber | String | string? | string | yes | |
+| FormType | Integer | int | number | no | |
+| serialNumber | String | string? | string | yes | Must be explicit null |
 ```
 
-**Type Mapping Rules**:
-| Java Type | JSON Type |
-|-----------|-----------|
-| `String` | `string` (never parse to number!) |
-| `Integer`, `int`, `Long`, `long` | `number` |
-| `BigDecimal`, `Double`, `Float` | `number` |
-| `Boolean`, `boolean` | `boolean` |
-| `List<T>` | `array` (even if single element) |
-| Any nullable field | `type \| null` (explicit null if not in XML) |
+**Type Mapping Rules (Java → C#)**:
+| Java Type | C# Type | JSON Type |
+|-----------|---------|-----------|
+| `String` | `string` / `string?` | `string` (never parse to number!) |
+| `Integer`, `int` | `int` / `int?` | `number` |
+| `Long`, `long` | `long` / `long?` | `number` |
+| `BigDecimal`, `Double`, `Float` | `decimal` / `double` | `number` |
+| `Boolean`, `boolean` | `bool` / `bool?` | `boolean` |
+| `List<T>` | `List<T>` | `array` (even if single element) |
+| Any nullable field | Nullable type (`T?`) | `type \| null` (explicit null if not in XML) |
 
 **Common string fields that look like numbers**:
 - `UserId`, `PhoneNumber`, `PNumber`, `LandingDeclaration`, `LogbookNumber`, `referenceNumber`, `FAO.Area`, `Size`
 
-**XML Parser Configuration** (preserve string types):
-```typescript
-const parser = new XMLParser({
-  parseTagValue: false,  // CRITICAL: Do NOT auto-parse
-  parseAttributeValue: false,
-  ignoreAttributes: false,
-  removeNSPrefix: true,
-});
+**JSON Serialization Configuration** (preserve string types):
+```csharp
+var options = new JsonSerializerOptions
+{
+    PropertyNamingPolicy = null, // Preserve original casing from model
+    DefaultIgnoreCondition = JsonIgnoreCondition.Never, // Include null fields
+    WriteIndented = false
+};
 ```
 
 #### What is NOT Used for Response Format
@@ -227,7 +228,7 @@ const parser = new XMLParser({
 | Used XSD for response format | XSD is for input validation only |
 | Guessed property casing | Read `@XmlElement` annotations in model class |
 | Copied from other converted endpoints | Verified from route tracing |
-| Let parser auto-convert strings to numbers | Disable parseTagValue, use type mapping (V5) |
+| Let serializer auto-convert strings to numbers | Use string types in C# model, configure JsonSerializer (V5) |
 | Missing null fields in output | Add ALL nullable fields from Java model (V5) |
 | Only included fields from golden master | Include ALL fields from Java model class (V5) |
 
@@ -348,7 +349,7 @@ After completing Steps 0-3, assess the endpoint complexity:
 - Use Spec-Driven Development: create requirements.md, design.md, tasks.md
 - Include Consolidated Analysis, Type Mapping, and all dependencies
 - Auto-approve requirements and design without asking user for review
-- All file paths in tasks.md MUST use full paths from repository root: `DiasRestApi/nodejs/src/controllers/...`
+- All file paths in tasks.md MUST use full paths from repository root: `DiasRestApi/dotnet_version/src/Controllers/...`
 
 **When in doubt**, lean toward direct implementation — the analysis gates (Steps 0-3) already catch the real issues. SDD adds value mainly when you need to track many moving parts.
 
@@ -357,32 +358,31 @@ After completing Steps 0-3, assess the endpoint complexity:
 Conversion results in a SELF CONTAINED controller module in the exact path from dias_controller_path. The controller module folder should have:
 
 ```
-DiasRestApi/nodejs/src/controllers/{legacy-repo}/{method}/{path}/
-├── handler.controller.ts          # Main endpoint handler
-├── services/                       # Business logic services
-│   ├── {feature}.service.ts
-│   └── external_services.service.ts  # For external API calls
-├── models/                         # Data models (JSON DTOs)
-│   └── {model}.model.ts
-├── docs/                           # Documentation
+DiasRestApi/dotnet_version/src/Controllers/{legacy-repo}/{method}/{path}/
+├── HandlerController.cs              # Main endpoint controller (replaces notimplemented_handler_controller.cs)
+├── Services/                          # Business logic services
+│   ├── {Feature}Service.cs
+│   └── ExternalServicesService.cs     # For external API calls (rare)
+├── Models/                            # Data models (C# DTOs)
+│   └── {Model}.cs
+├── docs/                              # Documentation
 │   ├── ENDPOINT_SPEC.md
 │   ├── CONVERSION_SUMMARY.md
 │   ├── TEST_INSTRUCTIONS.md
 │   ├── MODELS_USED.md
 │   └── SERVICES_USED.md
-├── specs/                          # Spec files (archived after completion)
+├── specs/                             # Spec files (archived after completion)
 │   ├── requirements.md
 │   ├── design.md
 │   └── tasks.md
-├── postman_collection.json         # Integration test collection
-└── README.md                       # Overview and links
+└── README.md                          # Overview and links
 ```
 
-**Note:** Unit tests are placed in `DiasRestApi/nodejs/test/unit/controllers/` - see `.kiro/steering/test-patterns.md` for exact locations.
+**Note:** Unit tests are placed in `DiasRestApi/dotnet_version/tests/DiasRestApi.UnitTests/Controllers/{repo}/{endpoint}/` following the existing test project structure.
 
 **Self-Contained Requirements**:
-- DO NOT reference existing shared services (except DalService)
-- DO NOT reference existing shared models
+- DO NOT reference existing shared services (except DalService and BaseController)
+- DO NOT reference existing shared models (except ErrorResponse, DalConnection, etc.)
 - DO copy and adapt any needed functionality into the module
 - DO use consistent naming if multiple modules need similar functionality
 
@@ -390,16 +390,48 @@ DiasRestApi/nodejs/src/controllers/{legacy-repo}/{method}/{path}/
 
 For database operations, use the existing DalService:
 ```
-DiasRestApi/nodejs/src/modules/dal/services/dal.service.ts
+DiasRestApi/dotnet_version/src/Services/DalService.cs
 ```
 
-The DalService communicates with DiasDalApi (see /DiasDalApi folder) and supports Type-Safe DTO operations using JSON representations of data objects.
+The DalService communicates with DiasDalApi (see /DiasDalApi folder) and supports forwarding HTTP requests to the DAL layer.
 
 **Database Operation Guidelines**:
-- Use JSON representations of data objects for all database operations
-- Assume DiasDalApi understands the objects
+- Inject `IDalService` via constructor injection
+- Configure `DalConnection` with the appropriate connection settings
+- Build `HttpRequestMessage` for the DAL operation
+- Use `ForwardRequestAsync` to execute the request
 - Document all data objects in docs/MODELS_USED.md
 - Prefer DalService over external domain service calls when possible
+
+**Example DalService usage:**
+```csharp
+public class MyEndpointController : BaseController
+{
+    private readonly IDalService _dalService;
+    private readonly IDalConfigurationService _dalConfigService;
+
+    public MyEndpointController(
+        IDalService dalService,
+        IDalConfigurationService dalConfigService,
+        IErrorStatusMapper errorStatusMapper,
+        ILogger<MyEndpointController> logger)
+        : base(errorStatusMapper, logger)
+    {
+        _dalService = dalService;
+        _dalConfigService = dalConfigService;
+    }
+
+    [HttpGet("/legacy/{repo}/{path}")]
+    public async Task<IActionResult> Handle([FromRoute] string param)
+    {
+        var connection = await _dalConfigService.GetConnectionAsync("default");
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/api/{param}");
+        var response = await _dalService.ForwardRequestAsync(request, connection);
+        var content = await response.Content.ReadAsStringAsync();
+        return Content(content, "application/json");
+    }
+}
+```
 
 #### 5.2 External Service Calls
 
@@ -413,7 +445,7 @@ The DalService communicates with DiasDalApi (see /DiasDalApi folder) and support
 
 **ALWAYS** use DalService to communicate with DiasDalApi, which handles all domain service communication.
 
-**Note:** This restriction applies ONLY to *-domain services. For non-domain integrations (third-party APIs, external systems), you MAY create direct calls in `external_services.service.ts`.
+**Note:** This restriction applies ONLY to *-domain services. For non-domain integrations (third-party APIs, external systems), you MAY create direct calls in `ExternalServicesService.cs`.
 
 **Why no direct domain calls?**
 - DiasDalApi is already connected to all domain services
@@ -422,23 +454,20 @@ The DalService communicates with DiasDalApi (see /DiasDalApi folder) and support
 - Direct calls create duplicate infrastructure
 
 **Correct Pattern:**
-```typescript
-// ✅ CORRECT: Use DalService
-@inject('services.DalService')
-private dalService: DalService;
+```csharp
+// ✅ CORRECT: Use DalService via constructor injection
+private readonly IDalService _dalService;
 
-const result = await this.dalService.execute({
-  operation: 'getLandingDeclaration',
-  params: { nation, externalId, serialNumber }
-});
+var request = new HttpRequestMessage(HttpMethod.Get, "/api/landing/declaration");
+var response = await _dalService.ForwardRequestAsync(request, connection);
 
 // ❌ WRONG: Direct SOAP call - DO NOT DO THIS
-const soapClient = new SoapClient('http://landing-domain/...');
-const result = await soapClient.call('getLandingDeclaration', ...);
+var soapClient = new SoapClient("http://landing-domain/...");
+var result = await soapClient.CallAsync("getLandingDeclaration", ...);
 ```
 
 **If the legacy endpoint calls non-domain integration services:**
-- Isolate external calls in `external_services.service.ts`
+- Isolate external calls in `ExternalServicesService.cs`
 - Document why DalService cannot be used
 - These are rare exceptions (most data comes from domain services)
 
@@ -456,33 +485,71 @@ The converted endpoint MUST match the legacy endpoint exactly:
 - Document any intentional differences in CONVERSION_SUMMARY.md
 - Use the Type Mapping from Step 0 to ensure correct data types
 
-The new handler.controller.ts should have the same comment header as the current notimplemented_handler.controller.ts and handle the same endpoint.
+The new HandlerController.cs should have the same comment header as the current notimplemented_handler_controller.cs and handle the same endpoint route.
 
 ### Step 7: Testing
 
 Create comprehensive tests:
-- **Unit tests**: In `DiasRestApi/nodejs/test/unit/controllers/{repo}/{endpoint}/` for all business logic
-- **Postman collection**: postman_collection.json with all integration test cases
+- **Unit tests**: In `DiasRestApi/dotnet_version/tests/DiasRestApi.UnitTests/Controllers/{repo}/{endpoint}/` for all business logic
+- **Integration tests**: Optional, in `DiasRestApi/dotnet_version/tests/DiasRestApi.IntegrationTests/Controllers/` if needed
 - **Comparison tests**: Verify 1-to-1 match with legacy endpoint
 
-**Test Framework:** Use `@loopback/testlab` (NOT chai directly). See `.kiro/steering/test-patterns.md`.
+**Test Framework:** xUnit + Moq (as used in the existing test project). See `DiasRestApi.UnitTests.csproj`.
 
-**Test File Locations:** See `.kiro/steering/test-patterns.md` for exact locations and Windows path workarounds.
+**Test Patterns:**
+- Use `[Fact]` for single test cases, `[Theory]` with `[InlineData]` for parameterized tests
+- Mock dependencies using `Moq` (`Mock<IDalService>`, etc.)
+- Follow Arrange/Act/Assert pattern
+- Set up `ControllerContext` with `DefaultHttpContext` when needed
+
+**Example test:**
+```csharp
+public class MyEndpointControllerTests
+{
+    private readonly Mock<IDalService> _mockDalService;
+    private readonly Mock<IErrorStatusMapper> _mockErrorMapper;
+
+    public MyEndpointControllerTests()
+    {
+        _mockDalService = new Mock<IDalService>();
+        _mockErrorMapper = new Mock<IErrorStatusMapper>();
+    }
+
+    [Fact]
+    public async Task Handle_ValidInput_ReturnsOk()
+    {
+        // Arrange
+        var response = new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent("{\"data\": \"test\"}", Encoding.UTF8, "application/json")
+        };
+        _mockDalService.Setup(s => s.ForwardRequestAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<DalConnection>()))
+            .ReturnsAsync(response);
+        // ... setup controller
+
+        // Act
+        var result = await controller.Handle("param");
+
+        // Assert
+        Assert.IsType<OkObjectResult>(result);
+    }
+}
+```
 
 #### Test Task Format in tasks.md
 
 For test tasks, always include explicit scoped test command:
 ```markdown
-- [ ] X.X Write unit/property test for [feature]
-  - Run: `npm test -- --grep "{endpoint-key}"`
+- [ ] X.X Write unit test for [feature]
+  - Run: `dotnet test DiasRestApi/dotnet_version/tests/DiasRestApi.UnitTests/ --filter "FullyQualifiedName~{TestClassName}"`
   - **Validates: Requirements X.X**
 ```
 
 For checkpoint tasks, run FULL test suite:
 ```markdown
 - [ ] X. Checkpoint - Ensure all tests pass
-  - Run: `npm test` (FULL test suite)
-  - Run: `npm run build`
+  - Run: `dotnet test DiasRestApi/dotnet_version/tests/` (FULL test suite)
+  - Run: `dotnet build DiasRestApi/dotnet_version/src/`
   - Verify: All tests pass (0 failures)
   - Report results to user before continuing
 ```
@@ -506,35 +573,35 @@ Also create **specs/** folder with requirements.md, design.md, and tasks.md if S
 
 Final steps before marking conversion as complete:
 
-**8.1 Archive Spec Files**
+**9.1 Archive Spec Files**
 - If SDD was used: keep spec files in the controller module's `specs/` folder
 - If direct implementation: keep `conversion-notes.md` in `specs/` folder
 - Do NOT move them to workspace-level specs folder
 
-**8.2 Update Endpoint Inventory**
+**9.2 Update Endpoint Inventory**
 - Update `endpoints-list.csv` with `conversion_status = "CONVERTED"`
 - Verify the `dias_controller_path` is accurate
 
-**8.3 Final Quality Check**
-- [ ] Zero ESLint errors
-- [ ] Explicit return types on all functions
-- [ ] Absolute imports (no relative imports)
-- [ ] Function length within limits
-- [ ] TypeScript strict mode compliance
-- [ ] All tests passing
+**9.3 Final Quality Check**
+- [ ] Zero build errors (`dotnet build`)
+- [ ] Explicit return types on all methods
+- [ ] Proper namespaces following project conventions
+- [ ] XML documentation on public members
+- [ ] Nullable reference types handled correctly
+- [ ] All tests passing (`dotnet test`)
 - [ ] Documentation complete and accurate
 
-**8.4 Comparison Test Sign-off**
+**9.4 Comparison Test Sign-off**
 - Verify converted endpoint responds identically to legacy
 - Document any intentional differences in CONVERSION_SUMMARY.md
 
 ## Important Notes
 
 ### DO NOT Change Files Outside Controller Module
-- Endpoint discovery is automatic in DiasRestApi
+- Endpoint discovery is automatic in ASP.NET Core (controller auto-discovery)
 - DAL connection is already configured
-- No index files needed
-- No registration in other source files
+- No startup registration needed for controllers
+- No manual route registration in other source files
 
 ### Maintain Living Documentation
 - Keep documentation in sync with code changes
@@ -543,7 +610,7 @@ Final steps before marking conversion as complete:
 
 ## Documentation Requirements
 
-**Per the Documentation Protocol** (see `/docs/meta/maintaining-docs.md`):
+**Per the Documentation Protocol**:
 
 - All documentation created during conversion MUST be kept in sync with the code
 - When the endpoint behavior changes, update ENDPOINT_SPEC.md and related documentation
@@ -559,5 +626,5 @@ Final steps before marking conversion as complete:
 - [ ] SERVICES_USED.md documents all services
 - [ ] README.md provides overview and links
 - [ ] Spec files (requirements.md, design.md, tasks.md) or conversion-notes.md created
-- [ ] All documentation follows markdown standards from Documentation Protocol
+- [ ] All documentation follows markdown standards
 - [ ] endpoints-list.csv updated with conversion_status = "CONVERTED"
